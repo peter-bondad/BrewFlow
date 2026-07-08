@@ -11,3 +11,15 @@ export function hashPassword(password: string): Promise<string> {
     parallelism: 1,
   });
 }
+
+export async function verifyHashedPassword({
+  hash,
+
+  password,
+}: {
+  hash: string;
+
+  password: string;
+}): Promise<boolean> {
+  return argon2.verify(hash, password);
+}
