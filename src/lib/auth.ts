@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { env } from "./env";
-import { hashPassword } from "@/utils/password-hashing";
+import { hashPassword, verifyHashedPassword } from "@/utils/password-hashing";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import db from "@/server/infra/database/client";
 import { ac, user, admin as adminPlugin } from "./permissions";
@@ -24,6 +24,7 @@ export const auth = betterAuth({
     enabled: true,
     password: {
       hash: hashPassword,
+      verify: verifyHashedPassword,
     },
   },
   plugins: [
