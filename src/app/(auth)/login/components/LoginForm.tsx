@@ -17,24 +17,29 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setError("");
+    setSubmitting(true);
+    setError("");
 
+    const loadingTimer = window.setTimeout(() => {
+      setShowLoading(true);
+    }, 250);
+
+    try {
       const { error } = await authClient.signIn.email({
         email: email.trim(),
         password,
       });
 
       if (error) {
-        setError(error.message ?? "Login failed.");
-        toast.error(error.message ?? "Login failed.");
+        setError(error.message ?? "Login failed. Please Try Again.");
+        toast.error(error.message ?? "Login failed. Please Try Again.");
         return;
       }
 
@@ -45,7 +50,9 @@ export function LoginForm() {
     } catch {
       toast.error("Something went wrong.");
     } finally {
-      setLoading(false);
+      window.clearTimeout(loadingTimer);
+      setShowLoading(false);
+      setSubmitting(false);
     }
   }
 
@@ -79,7 +86,7 @@ export function LoginForm() {
               name="email"
               placeholder="you@example.com"
               value={email}
-              disabled={loading}
+              disabled={submitting}
               required
               autoComplete="email"
               inputMode="email"
@@ -100,7 +107,7 @@ export function LoginForm() {
                 name="password"
                 placeholder="Enter your password"
                 value={password}
-                disabled={loading}
+                disabled={submitting}
                 required
                 autoComplete="current-password"
                 aria-invalid={Boolean(error)}
@@ -109,7 +116,7 @@ export function LoginForm() {
               />
               <button
                 type="button"
-                disabled={loading}
+                disabled={submitting}
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword((current) => !current)}
                 className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#7b5f46] transition hover:bg-[#f2dfca] hover:text-[#3d2413] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e0b887] disabled:pointer-events-none disabled:opacity-50"
@@ -123,29 +130,19 @@ export function LoginForm() {
             </div>
           </div>
 
-          {error ? (
-            <p
-              id={errorId}
-              role="alert"
-              className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-            >
-              {error}
-            </p>
-          ) : null}
-
           <div className="flex flex-col gap-3 text-sm text-[#7b5f46] sm:flex-row sm:items-center sm:justify-between">
             <Label className="inline-flex w-fit cursor-pointer items-center gap-2 font-normal">
               <input
                 type="checkbox"
                 name="remember"
-                disabled={loading}
+                disabled={submitting}
                 className="h-4 w-4 rounded border-[#cda77d] text-[#6f3e1d] focus:ring-[#e0b887]"
               />
               Remember me
             </Label>
             <button
               type="button"
-              disabled={loading}
+              disabled={submitting}
               onClick={() => toast.info("Password reset is not available yet.")}
               className="w-fit cursor-pointer font-medium text-[#8d5a2b] transition hover:text-[#6f3e1d] disabled:pointer-events-none disabled:opacity-50"
             >
@@ -155,15 +152,15 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             size="lg"
-            className="h-12 w-full rounded-full bg-[#6f3e1d] text-base text-[#fff8ef] shadow-[0_14px_30px_-18px_rgba(74,43,28,0.9)] hover:bg-[#8d5a2b] focus-visible:ring-[#e0b887]"
+            className="cursor-pointer h-12 w-full rounded-full bg-[#6f3e1d] text-base text-[#fff8ef] shadow-[0_14px_30px_-18px_rgba(74,43,28,0.9)] hover:bg-[#8d5a2b] focus-visible:ring-[#e0b887]"
           >
-            {loading ? (
+            {showLoading ? (
               <Loader2 className="size-4 animate-spin" aria-hidden="true" />
             ) : null}
 
-            <span>{loading ? "Signing in..." : "Sign in"}</span>
+            <span>{showLoading ? "Signing in..." : "Sign in"}</span>
           </Button>
         </form>
       </div>
