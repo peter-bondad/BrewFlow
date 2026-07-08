@@ -12,6 +12,10 @@ export const users = pgTable("users", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: text("role"),
+  banned: boolean("banned").default(false),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires"),
 });
 
 export const sessions = pgTable(
@@ -29,6 +33,7 @@ export const sessions = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
+    impersonatedBy: text("impersonated_by"),
   },
   (table) => [index("sessions_userId_idx").on(table.userId)],
 );
@@ -75,22 +80,19 @@ export const verifications = pgTable(
 
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
-
   accounts: many(accounts),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
+  users: one(users, {
     fields: [sessions.userId],
-
     references: [users.id],
   }),
 }));
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
+  users: one(users, {
     fields: [accounts.userId],
-
     references: [users.id],
   }),
 }));
