@@ -14,11 +14,12 @@ export const auth = betterAuth({
     usePlural: true, // Use plural table names (e.g., "users" instead of "user")
   }),
   emailAndPassword: {
+    minPasswordLength: 8,
+    maxPasswordLength: 128,
+    requireEmailVerification: true,
     enabled: true,
     password: {
-      hash: (pass: string) => {
-        return hashPassword(pass); // TODO: Implement password hashing
-      },
+      hash: hashPassword,
     },
   },
   plugins: [],
