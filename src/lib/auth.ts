@@ -16,25 +16,21 @@ export const auth = betterAuth({
     window: 60, // 1 minute
     max: 100,
     storage: "database",
-
     customRules: {
       "/sign-in/email": {
         window: 60,
         max: 5,
       },
-
       "/sign-up/email": {
         window: 60,
         max: 3,
       },
-
       "/forget-password": {
         window: 300, // 5 minutes
         max: 3,
       },
     },
   },
-
   database: drizzleAdapter(db, {
     provider: "pg", // Specify the database provider (e.g., "pg" for PostgreSQL)
     usePlural: true, // Use plural table names (e.g., "users" instead of "user")
