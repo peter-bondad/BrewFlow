@@ -12,7 +12,7 @@ import type {
 } from "./invitation.interface";
 import { invitationStatus } from "./invitation.constant";
 
-export class DrizzleInvitationRepository implements InvitationIRepository {
+export class InvitationRepository implements InvitationIRepository {
   constructor(private readonly database = db) {}
 
   async create(data: CreateInvitation): Promise<void> {
