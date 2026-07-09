@@ -1,8 +1,7 @@
-import type { Context, Next } from "hono";
-import type { Env } from "@/server/types/hono-types";
 import { auth } from "@/lib/auth";
+import { factory } from "@/server/hono/hono-factory";
 
-export async function requireAuth(c: Context<Env>, next: Next) {
+export const requireAuth = factory.createMiddleware(async (c, next) => {
   const session = await auth.api.getSession({
     headers: c.req.raw.headers,
   });
@@ -18,4 +17,4 @@ export async function requireAuth(c: Context<Env>, next: Next) {
   c.set("session", session.session);
 
   await next();
-}
+});

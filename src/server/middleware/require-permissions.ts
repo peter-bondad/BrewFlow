@@ -1,9 +1,8 @@
 import { auth } from "@/lib/auth";
-import type { Context, Next } from "hono";
-import type { Env } from "@/server/types/hono-types";
+import { factory } from "../hono/hono-factory";
 
 export function requirePermission(permissions: Record<string, string[]>) {
-  return async (c: Context<Env>, next: Next) => {
+  return factory.createMiddleware(async (c, next) => {
     const user = c.get("user");
 
     if (!user) {
@@ -22,5 +21,5 @@ export function requirePermission(permissions: Record<string, string[]>) {
     }
 
     await next();
-  };
+  });
 }
