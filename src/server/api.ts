@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { Env } from "./types/hono-types";
+import { Env } from "./hono/hono-types";
 import { requireAuth } from "./middleware/require-auth";
 
 const app = new Hono<Env>()
