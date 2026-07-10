@@ -33,7 +33,7 @@ export class InvitationRepository implements IInvitationRepository {
       },
       where: and(
         eq(invitations.email, email),
-        eq(invitations.status, "pending"),
+        eq(invitations.status, invitationStatus.Pending),
       ),
     }) as Promise<PendingInvitation | undefined>;
   }
@@ -62,7 +62,7 @@ export class InvitationRepository implements IInvitationRepository {
       .update(invitations)
       .set({
         status: invitationStatus.Accepted,
-        usedBy: adminUserId,
+        createdBy: adminUserId,
         acceptedAt: new Date(),
       })
       .where(eq(invitations.id, invitationId));
