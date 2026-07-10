@@ -1,4 +1,4 @@
-// shared/http-status.ts
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 export const HttpStatus = {
   OK: 200,
@@ -10,4 +10,6 @@ export const HttpStatus = {
   CONFLICT: 409,
   GONE: 410,
   INTERNAL_SERVER_ERROR: 500,
-} as const;
+} as const satisfies Record<string, ContentfulStatusCode>;
+
+export type HttpStatusCode = ContentfulStatusCode;

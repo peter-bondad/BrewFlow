@@ -6,6 +6,7 @@ import { Env } from "./hono/hono-types";
 import { requireAuth } from "./middleware/require-auth";
 import adminInvitationRoutes from "./features/invitation/admin.routes";
 import publicInvitationRoutes from "./features/invitation/public.routes";
+import { appErrorHandler } from "./errors/app-error-handler";
 
 const app = new Hono<Env>()
 
@@ -24,6 +25,8 @@ const app = new Hono<Env>()
   .on(["POST", "GET"], "/api/auth/*", (c) => {
     return auth.handler(c.req.raw);
   })
+
+  .onError(appErrorHandler)
 
   .route("/api/invitation", publicInvitationRoutes)
   // admin routes
