@@ -93,7 +93,7 @@ export function UserNav({ user }: UserNavProps) {
         <div className="space-y-1 p-2">
           <Button
             variant="ghost"
-            className="w-full justify-start"
+            className="cursor-pointer w-full justify-start"
             onClick={() => router.push("/admin/settings")}
           >
             <Settings className="mr-2 size-4" />
@@ -102,7 +102,7 @@ export function UserNav({ user }: UserNavProps) {
 
           <Button
             variant="ghost"
-            className="w-full justify-start text-red-600 hover:text-red-600"
+            className="cursor-pointer w-full justify-start"
             disabled={loading}
             onClick={handleLogout}
           >
