@@ -139,7 +139,7 @@ export function InviteUserForm() {
         ) : (
           <Send className="size-4" aria-hidden="true" />
         )}
-        <span>{submitting ? "Creating invite..." : "Create invite"}</span>
+        <span>{submitting ? "Creating invite..." : "Send invite"}</span>
       </Button>
     </form>
   );

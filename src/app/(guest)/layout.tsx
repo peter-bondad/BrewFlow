@@ -1,3 +1,4 @@
+import { requireGuest } from "@/server/auth/require-guest";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,10 +6,11 @@ export const metadata: Metadata = {
   description: "Modern coffee-themed authentication experience",
 };
 
-export default function AuthLayout({
+export default async function GuestLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await requireGuest();
   return <>{children}</>;
 }
