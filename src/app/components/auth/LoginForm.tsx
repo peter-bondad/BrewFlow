@@ -32,26 +32,34 @@ export function LoginForm() {
     }, 250);
 
     try {
-      const { error } = await authClient.signIn.email({
+      const { data, error } = await authClient.signIn.email({
         email: email.trim(),
         password,
       });
 
       if (error) {
-        console.dir("Login error:", error);
-        setError(error.message ?? "Login failed. Please Try Again.");
-        toast.error(error.message ?? "Login failed. Please Try Again.");
+        if (process.env.NODE_ENV === "development") {
+          console.dir(error);
+        }
+        setError(error.message ?? "Login failed. Please try again.");
+        toast.error(error.message ?? "Login failed. Please try again.");
         return;
       }
-      const { data: session } = await authClient.getSession();
 
-      if (session?.user.role === "admin") {
-        router.replace("/admin");
-      } else {
-        router.replace("/login");
+      if (!data) {
+        toast.error("Unable to complete sign in.");
+
+        return;
       }
 
-      toast.success("Welcome back!");
+      toast.success("Welcome back to BrewFlow!");
+      switch (data.user.role) {
+        case "admin":
+          router.replace("/admin");
+          break;
+        default:
+          toast.error("You are not authorized to access this application.");
+      }
     } catch {
       toast.error("Something went wrong.");
     } finally {
@@ -66,21 +74,18 @@ export function LoginForm() {
       <div className="w-full max-w-xl sm:max-w-lg lg:max-w-lg">
         <div className="mb-8">
           <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#8d5a2b] sm:tracking-[0.35em]">
-            Coffee House
+            BrewFlow
           </p>
           <h2 className="mt-2 text-3xl font-semibold text-[#3d2413] sm:text-4xl lg:text-5xl">
             Login to your account
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-[#7b5f46] sm:text-base lg:text-lg">
-            Access your rewards and order your next favorite drink.
+            Sign in to access your coffee shop dashboard and manage daily
+            operations.
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-5"
-          aria-describedby={error ? errorId : undefined}
-        >
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor={emailId} className="text-[#5d4033]">
               Email
@@ -89,7 +94,7 @@ export function LoginForm() {
               id={emailId}
               type="email"
               name="email"
-              placeholder="you@example.com"
+              placeholder="Enter your email"
               value={email}
               disabled={submitting}
               required
@@ -148,7 +153,9 @@ export function LoginForm() {
             <button
               type="button"
               disabled={submitting}
-              onClick={() => toast.info("Password reset is not available yet.")}
+              onClick={() =>
+                toast.info("Password reset will be available soon.")
+              }
               className="w-fit cursor-pointer font-medium text-[#8d5a2b] transition hover:text-[#6f3e1d] disabled:pointer-events-none disabled:opacity-50"
             >
               Forgot password?

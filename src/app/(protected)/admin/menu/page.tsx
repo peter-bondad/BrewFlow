@@ -39,20 +39,20 @@ export default function MenuPage() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#f5d5ae]">
-              Coffee House
+              BrewFlow
             </p>
 
             <h1 className="mt-2 text-4xl font-bold">Menu Management</h1>
 
             <p className="mt-3 max-w-2xl text-[#f6e7d4]">
-              Manage your drinks, desserts, pricing, and availability from one
-              place.
+              Manage menu items, categories, pricing, and availability across
+              your coffee shop.
             </p>
           </div>
 
-          <Button className="bg-[#fff8ef] text-[#5b3318] hover:bg-[#f4eadf]">
+          <Button className="cursor-pointer bg-[#fff8ef] text-[#5b3318] hover:bg-[#f4eadf]">
             <Plus className="mr-2 h-4 w-4" />
-            Add Menu Item
+            New Menu Item
           </Button>
         </div>
       </div>
@@ -84,63 +84,67 @@ export default function MenuPage() {
 
         <Card className="border-[#e4c8a7]">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Average Price</CardTitle>
-            <DollarSign className="h-5 w-5 text-[#8d5a2b]" />
+            <CardTitle>Available Items</CardTitle>
           </CardHeader>
 
           <CardContent>
-            <p className="text-4xl font-bold text-[#3d2413]">$5.10</p>
+            <p className="text-4xl font-bold text-[#3d2413]">38</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Toolbar */}
-
-      <Card className="border-[#e4c8a7]">
-        <CardContent className="p-5">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-
-            <Input placeholder="Search menu..." className="pl-10" />
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Table */}
 
       <Card className="border-[#e4c8a7]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Coffee className="h-5 w-5 text-[#8d5a2b]" />
-            Menu Items
-          </CardTitle>
+        <CardHeader className="space-y-5">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2 text-[#3d2413]">
+                <Coffee className="h-5 w-5 text-[#8d5a2b]" />
+                Menu Items
+              </CardTitle>
+
+              <p className="mt-1 text-sm text-[#7b5f46]">
+                Browse and manage your coffee shop menu.
+              </p>
+            </div>
+
+            <div className="relative w-full md:w-80">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
+              <Input placeholder="Search menu..." className="pl-10" />
+            </div>
+          </div>
         </CardHeader>
 
         <CardContent className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="border-b">
-              <tr className="text-left text-[#7b5f46]">
-                <th className="py-3">Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Status</th>
+            <thead>
+              <tr className="border-b text-left text-xs font-semibold uppercase tracking-wide text-[#8d6b4d]">
+                <th className="py-4">Name</th>
+                <th className="py-4">Category</th>
+                <th className="py-4">Price</th>
+                <th className="py-4">Status</th>
               </tr>
             </thead>
 
             <tbody>
               {menuItems.map((item) => (
-                <tr key={item.name} className="border-b last:border-none">
-                  <td className="py-4 font-medium text-[#3d2413]">
+                <tr
+                  key={item.name}
+                  className="border-b transition-colors hover:bg-[#fcf7f1] last:border-none"
+                >
+                  <td className="py-5 font-medium text-[#3d2413]">
                     {item.name}
                   </td>
 
-                  <td>{item.category}</td>
+                  <td className="text-[#6f5640]">{item.category}</td>
 
-                  <td>{item.price}</td>
+                  <td className="font-medium">{item.price}</td>
 
                   <td>
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                         item.status === "Available"
                           ? "bg-green-100 text-green-700"
                           : "bg-red-100 text-red-700"

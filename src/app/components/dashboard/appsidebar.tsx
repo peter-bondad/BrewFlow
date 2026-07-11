@@ -95,7 +95,7 @@ export function AppSidebar() {
           </div>
 
           <div>
-            <h1 className="font-semibold text-[#3d2413]">Coffee House</h1>
+            <h1 className="font-semibold text-[#3d2413]">BrewFlow</h1>
             <p className="text-xs text-[#7b5f46]">Admin Panel</p>
           </div>
         </div>

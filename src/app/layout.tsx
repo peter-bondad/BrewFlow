@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coffee House",
+  title: "BrewFlow",
   description: "...",
   icons: {
     icon: "/coffee-bean-logo.svg",

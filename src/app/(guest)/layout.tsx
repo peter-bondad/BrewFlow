@@ -2,8 +2,8 @@ import { requireGuest } from "@/server/auth/require-guest";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Coffee House",
-  description: "Modern coffee-themed authentication experience",
+  title: "BrewFlow",
+  description: "Coffee shop management platform",
 };
 
 export default async function GuestLayout({
