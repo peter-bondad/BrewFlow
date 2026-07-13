@@ -12,6 +12,10 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "db:push:prod": "dotenv -e .env.prod drizzle-kit push",
+    "db:migrate:prod": "dotenv -e .env.prod drizzle-kit migrate",
+    "db:generate:prod": "dotenv -e .env.prod drizzle-kit generate",
+    "db:studio:prod": "dotenv -e .env.prod drizzle-kit studio",
     "db:sync-auth": "pnpm run db:auth-gen && pnpm run db:generate && pnpm run db:migrate"
   },
   "dependencies": {
@@ -23,6 +27,7 @@
     "better-auth": "^1.6.23",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv-cli": "^11.0.0",
     "drizzle-orm": "^0.45.2",
     "hono": "^4.12.27",
     "lucide-react": "^1.22.0",
@@ -47,6 +52,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }
