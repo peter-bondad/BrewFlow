@@ -1,10 +1,12 @@
+import { UserRole } from "@/server/types/user-role.types";
+
 export interface User {
   id: string;
   name: string;
   email: string;
   emailVerified: boolean;
   image: string | null;
-  role: "user" | "admin";
+  role: UserRole;
   banned: boolean | null;
   banReason: string | null;
   banExpires: Date | null;
