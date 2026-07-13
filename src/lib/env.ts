@@ -11,6 +11,7 @@ export const env = createEnv({
     RESEND_API_KEY: z.string(),
     ADMIN_EMAIL: z.string(),
     ADMIN_PASSWORD: z.string(),
+    CRON_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_APP_NAME: z.string().min(2).max(100),
@@ -25,6 +26,7 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     ADMIN_EMAIL: process.env.ADMIN_EMAIL,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    CRON_SECRET: process.env.CRON_SECRET,
     NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
     NEXT_PUBLIC_APP_DESCRIPTION: process.env.NEXT_PUBLIC_APP_DESCRIPTION,
   },
