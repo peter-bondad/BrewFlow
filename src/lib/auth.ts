@@ -11,7 +11,6 @@ export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
   appName: env.NEXT_PUBLIC_APP_NAME,
-  appUrl: env.NEXT_PUBLIC_APP_URL,
   rateLimit: {
     enabled: true,
     window: 60, // 1 minute
