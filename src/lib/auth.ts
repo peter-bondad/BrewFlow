@@ -3,7 +3,7 @@ import { env } from "./env";
 import { hashPassword, verifyHashedPassword } from "@/utils/password-hashing";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import db from "@/server/infra/database/client";
-import { ac, user, admin as adminPlugin } from "./permissions";
+import { ac, manager, owner, staff } from "./permission/permissions";
 import { admin } from "better-auth/plugins";
 import * as schema from "@/server/infra/database/schemas/index";
 import { container } from "@/server/container";
@@ -68,8 +68,9 @@ export const auth = betterAuth({
     admin({
       ac,
       roles: {
-        user,
-        admin: adminPlugin,
+        owner,
+        manager,
+        staff,
       },
     }),
   ],
