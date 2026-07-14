@@ -111,7 +111,7 @@ export function ForgotPasswordForm() {
         <Button
           type="submit"
           disabled={submitting}
-          className="h-12 w-full rounded-full"
+          className="cursor-pointer h-12 w-full rounded-full"
         >
           {submitting && <Loader2 className="mr-2 size-4 animate-spin" />}
 
@@ -122,7 +122,7 @@ export function ForgotPasswordForm() {
           Remember your password?{" "}
           <Link
             href="/login"
-            className="font-medium text-[#8d5a2b] hover:text-[#6f3e1d]"
+            className="underline font-medium text-[#8d5a2b] hover:text-[#6f3e1d]"
           >
             Back to login
           </Link>
