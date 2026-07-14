@@ -1,16 +1,6 @@
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { users } from "./auth-schema";
-
-import { pgEnum } from "drizzle-orm/pg-core";
-
-export const orderStatusEnum = pgEnum("order_status", [
-  "pending",
-  "paid",
-  "preparing",
-  "ready",
-  "completed",
-  "cancelled",
-]);
+import { orderStatusEnum } from "./schema-pg.enum";
 
 export const orders = pgTable("orders", {
   id: text("id").primaryKey(),
@@ -19,7 +9,7 @@ export const orders = pgTable("orders", {
     .notNull()
     .references(() => users.id),
 
-  status: orderStatusEnum("status").notNull(),
+  status: orderStatusEnum("status").default("pending").notNull(),
 
   subtotal: integer("subtotal").notNull(),
 
