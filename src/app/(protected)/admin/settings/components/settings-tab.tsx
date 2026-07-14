@@ -1,13 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
 import { AccountSettings } from "./account-settings";
 import { SettingsCard } from "./settings-card";
 import { SecuritySettings } from "./security-settings";
