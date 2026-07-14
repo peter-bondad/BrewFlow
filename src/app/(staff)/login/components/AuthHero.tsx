@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export function AuthHero() {
   return (
-    <section className="relative flex min-h-[360px] w-full flex-col justify-between gap-6 overflow-hidden border-b border-[#d9b07f]/15 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.16),_transparent_34%),linear-gradient(135deg,_#4a2b1c_0%,_#6e3d1f_45%,_#c67e3f_100%)] p-6 text-[#fff9f2] sm:p-8 lg:w-1/2 lg:border-b-0 lg:border-r lg:border-[#d9b07f]/15 lg:p-10">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.14),_transparent_45%)]" />
+    <section className="relative flex min-h-90 w-full flex-col justify-between gap-6 overflow-hidden border-b border-[#d9b07f]/15 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_34%),linear-gradient(135deg,#4a2b1c_0%,#6e3d1f_45%,#c67e3f_100%)] p-6 text-[#fff9f2] sm:p-8 lg:w-1/2 lg:border-b-0 lg:border-r lg:border-[#d9b07f]/15 lg:p-10">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.14),transparent_45%)]" />
 
       <div className="pointer-events-none absolute left-6 top-28 h-14 w-14 animate-pulse rounded-full bg-[#fff2de]/40 blur-2xl" />
 
