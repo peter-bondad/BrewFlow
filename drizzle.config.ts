@@ -1,4 +1,5 @@
-import { env } from "@/lib/env";
+import "dotenv/config";
+
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
@@ -6,7 +7,7 @@ export default defineConfig({
   dialect: "postgresql",
   schema: "./src/server/infra/database/schemas/index.ts",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: process.env.DATABASE_URL!,
   },
   strict: true,
   schemaFilter: "public",
