@@ -13,10 +13,10 @@ async function seedAdmin() {
   });
 
   if (existingAdmin) {
-    if (existingAdmin.role !== "admin") {
+    if (existingAdmin.role !== "owner") {
       await db
         .update(users)
-        .set({ role: "admin" })
+        .set({ role: "owner" })
         .where(eq(users.id, existingAdmin.id));
 
       console.log("Existing user promoted to admin");
@@ -40,11 +40,11 @@ async function seedAdmin() {
   await db
     .update(users)
     .set({
-      role: "admin",
+      role: "owner",
     })
     .where(eq(users.id, userId));
 
-  console.log(`Admin ready: ${email}`);
+  console.log(`Owner ready: ${email}`);
 }
 
 seedAdmin()

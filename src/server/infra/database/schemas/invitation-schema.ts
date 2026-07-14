@@ -9,7 +9,7 @@ export const invitations = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     email: text("email").notNull(),
     name: text("name"),
-    role: userRoleEnum("role").default("user").notNull(),
+    role: userRoleEnum("role").default("staff").notNull(),
     tokenHash: text("token_hash").notNull().unique(),
     usedBy: text("used_by").references(() => users.id),
     expiresAt: timestamp("expires_at").notNull(),
