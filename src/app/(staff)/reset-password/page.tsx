@@ -1,5 +1,6 @@
 import { ResetPasswordForm } from "@/app/(staff)/reset-password/components/reset-password-form";
 import { Coffee } from "lucide-react";
+import Image from "next/image";
 
 export default function ResetPasswordPage() {
   return (
@@ -24,9 +25,19 @@ export default function ResetPasswordPage() {
             </div>
 
             <div className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur">
-              <p className="text-sm text-[#f5e7d8]">
-                ☕ A fresh password helps keep your workspace secure.
-              </p>
+              <div className="flex items-start gap-3">
+                <Image
+                  src="/icon.svg"
+                  alt="BrewFlow"
+                  width={20}
+                  height={20}
+                  className="mt-0.5 shrink-0"
+                />
+
+                <p className="text-sm text-[#f5e7d8]">
+                  A strong password keeps your coffee shop and your team secure.
+                </p>
+              </div>
             </div>
           </section>
 

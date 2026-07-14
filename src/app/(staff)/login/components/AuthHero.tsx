@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function AuthHero() {
   return (
     <section className="relative flex min-h-[360px] w-full flex-col justify-between gap-6 overflow-hidden border-b border-[#d9b07f]/15 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.16),_transparent_34%),linear-gradient(135deg,_#4a2b1c_0%,_#6e3d1f_45%,_#c67e3f_100%)] p-6 text-[#fff9f2] sm:p-8 lg:w-1/2 lg:border-b-0 lg:border-r lg:border-[#d9b07f]/15 lg:p-10">
@@ -8,8 +10,16 @@ export function AuthHero() {
       <div className="pointer-events-none absolute right-8 top-16 h-20 w-20 rounded-full bg-white/10 blur-3xl" />
 
       <div className="relative z-10">
-        <div className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/90 backdrop-blur-sm sm:text-sm">
-          ☕ Brew Smarter
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/90 backdrop-blur-sm sm:text-sm">
+          <Image
+            src="./icon.svg"
+            alt="BrewFlow"
+            width={16}
+            height={16}
+            className="size-5"
+          />
+
+          <span>Brew Smarter</span>
         </div>
 
         <h1 className="mt-6 text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">

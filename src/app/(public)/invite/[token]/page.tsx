@@ -2,6 +2,7 @@ import { Coffee } from "lucide-react";
 import { AcceptInviteForm } from "../accept/components/AcceptInviteForm";
 import { container } from "@/server/container";
 import { InvitationErrorPage } from "../accept/components/InvitationErrorPage";
+import Image from "next/image";
 
 type AcceptInvitationPageProps = {
   params: Promise<{
@@ -47,10 +48,19 @@ export default async function AcceptInvitationPage({
             </div>
 
             <div className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur">
-              <p className="text-sm text-[#f5e7d8]">
-                ☕ Welcome to the team. Good software, like good coffee, starts
-                with the right ingredients.
-              </p>
+              <div className="flex items-start gap-3">
+                <Image
+                  src="/icon.svg"
+                  alt="BrewFlow"
+                  width={20}
+                  height={20}
+                  className="mt-0.5 shrink-0"
+                />
+
+                <p className="text-sm text-[#f5e7d8]">
+                  Welcome aboard. Let's brew something great together.
+                </p>
+              </div>
             </div>
           </section>
 

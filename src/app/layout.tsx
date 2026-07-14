@@ -17,8 +17,7 @@ export const metadata: Metadata = {
   title: "BrewFlow",
   description: "...",
   icons: {
-    icon: "/coffee-bean-logo.svg",
-    apple: "/coffee-bean-logo.svg",
+    icon: "/icon.svg",
   },
 };
 
