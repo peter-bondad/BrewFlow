@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { userRole, UserRole } from "@/server/types/user-role.types";
 import { Loader2, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
@@ -10,7 +11,7 @@ import { toast } from "sonner";
 export function InviteUserForm() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState<UserRole>(userRole.Staff);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -53,7 +54,7 @@ export function InviteUserForm() {
       setMessage(nextMessage);
       setEmail("");
       setName("");
-      setRole("user");
+      setRole("staff");
       toast.success("Invite created.");
     } catch {
       const nextError = "Something went wrong while creating the invite.";
@@ -77,7 +78,7 @@ export function InviteUserForm() {
           disabled={submitting}
           autoComplete="email"
           inputMode="email"
-          placeholder="newuser@example.com"
+          placeholder="Enter your email"
           onChange={(event) => setEmail(event.target.value)}
           className="h-11"
         />
@@ -105,11 +106,12 @@ export function InviteUserForm() {
           name="role"
           value={role}
           disabled={submitting}
-          onChange={(event) => setRole(event.target.value)}
+          onChange={(event) => setRole(event.target.value as UserRole)}
           className="h-11 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50"
         >
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
+          <option value="owner">Owner</option>
+          <option value="manager">Manager</option>
+          <option value="staff">staff</option>
         </select>
       </div>
 
