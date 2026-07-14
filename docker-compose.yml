@@ -1,13 +1,13 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: learn-next-postgres
+    container_name: brewflow-postgres
     restart: always
 
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: learn_next_db
+      POSTGRES_DB: brewflow_db
 
     ports:
       - "5432:5432"
@@ -16,7 +16,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d learn_next_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d brewflow_db"]
       interval: 10s
       timeout: 5s
       retries: 5
