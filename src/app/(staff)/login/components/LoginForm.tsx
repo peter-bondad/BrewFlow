@@ -60,7 +60,7 @@ export function LoginForm() {
         return;
       }
 
-      toast.success("Welcome back to BrewFlow!");
+      toast.success(`Welcome back to BrewFlow, ${data.user.firstName}`);
       router.replace("/admin");
     } catch {
       toast.error("Something went wrong.");
