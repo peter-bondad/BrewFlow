@@ -1,16 +1,16 @@
 import { eq } from "drizzle-orm";
 
-import db from "./client";
-import { users } from "./schemas";
 import { auth } from "@/lib/auth";
 import { env } from "@/lib/env";
+import db from "./client";
+import { users } from "./schemas";
 
 async function seedProductionOwner() {
   const email = env.ADMIN_EMAIL;
   const password = env.ADMIN_PASSWORD;
 
   if (!email || !password) {
-    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be configured");
+    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be configured.");
   }
 
   const existingUser = await db.query.users.findFirst({
@@ -23,10 +23,11 @@ async function seedProductionOwner() {
         .update(users)
         .set({
           role: "owner",
+          emailVerified: true,
         })
         .where(eq(users.id, existingUser.id));
 
-      console.log(`Promoted ${email} to owner`);
+      console.log(`Promoted "${email}" to owner.`);
     } else {
       console.log(`Owner already exists: ${email}`);
     }
@@ -37,10 +38,16 @@ async function seedProductionOwner() {
   const result = await auth.api.signUpEmail({
     body: {
       name: "System Owner",
+      firstName: "System",
+      lastName: "Owner",
       email,
       password,
     },
   });
+
+  if (!result?.user) {
+    throw new Error("Failed to create production owner account.");
+  }
 
   await db
     .update(users)
@@ -53,12 +60,14 @@ async function seedProductionOwner() {
   console.log(`Production owner created: ${email}`);
 }
 
-seedProductionOwner()
-  .then(() => {
-    console.log("Production seed completed");
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error("Production seed failed:", error);
-    process.exit(1);
-  });
+async function main() {
+  await seedProductionOwner();
+
+  console.log("Production seed completed.");
+}
+
+main().catch((error) => {
+  console.error("Production seed failed.");
+  console.error(error);
+  process.exit(1);
+});

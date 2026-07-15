@@ -8,18 +8,22 @@ async function seedAdmin() {
   const email = env.ADMIN_EMAIL;
   const password = env.ADMIN_PASSWORD;
 
-  const existingAdmin = await db.query.users.findFirst({
+  if (!email || !password) {
+    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required.");
+  }
+
+  const existingOwner = await db.query.users.findFirst({
     where: eq(users.email, email),
   });
 
-  if (existingAdmin) {
-    if (existingAdmin.role !== "owner") {
+  if (existingOwner) {
+    if (existingOwner.role !== "owner") {
       await db
         .update(users)
         .set({ role: "owner" })
-        .where(eq(users.id, existingAdmin.id));
+        .where(eq(users.id, existingOwner.id));
 
-      console.log("Existing user promoted to admin");
+      console.log("Existing user promoted to owner");
     } else {
       console.log("Admin already exists");
     }
@@ -30,10 +34,16 @@ async function seedAdmin() {
   const result = await auth.api.signUpEmail({
     body: {
       name: "System Admin",
+      firstName: "System",
+      lastName: "Admin",
       email,
       password,
     },
   });
+
+  if (!result?.user) {
+    throw new Error("Failed to create owner account.");
+  }
 
   const userId = result.user.id;
 
