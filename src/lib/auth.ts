@@ -48,6 +48,29 @@ export const auth = betterAuth({
     usePlural: true, // Use plural table names (e.g., "users" instead of "user")
     schema,
   }),
+  user: {
+    additionalFields: {
+      firstName: {
+        type: "string",
+        required: true,
+      },
+
+      middleName: {
+        type: "string",
+        required: false,
+      },
+
+      lastName: {
+        type: "string",
+        required: true,
+      },
+
+      phoneNumber: {
+        type: "string",
+        required: false,
+      },
+    },
+  },
   emailAndPassword: {
     requireEmailVerification: false,
     enabled: true,
