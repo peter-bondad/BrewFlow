@@ -1,28 +1,33 @@
+import { Settings } from "lucide-react";
 import { SettingsTabs } from "./components/settings-tab";
 
 export default function SettingsPage() {
   return (
-    <main
-      className="
-        min-h-auto
-        bg-[linear-gradient(135deg,#f8efe7_0%,#f4e0c8_55%,#e8c79d_100%)]
-        px-4
-        py-8
-        sm:px-6
-        lg:px-8
-      "
-    >
-      <div className="mx-auto max-w-5xl space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold text-[#4a2c1a]">Settings</h1>
+    <div className="mx-auto max-w-4xl space-y-8">
+      <section className="rounded-3xl bg-[linear-gradient(135deg,#4a2b1c_0%,#6e3d1f_45%,#c67e3f_100%)] p-8 text-[#fff9f2] shadow-lg">
+        <div className="flex items-center gap-3">
+          <div className="rounded-xl bg-white/10 p-3">
+            <Settings className="size-6" />
+          </div>
 
-          <p className="mt-2 text-sm text-[#8b5e34]">
-            Manage your account and BrewFlow preferences.
-          </p>
+          <div>
+            <p className="text-sm uppercase tracking-[0.3em] text-[#f7d8b2]">
+              Account
+            </p>
+
+            <h1 className="mt-1 text-3xl font-semibold">
+              Settings & Preferences
+            </h1>
+          </div>
         </div>
 
-        <SettingsTabs />
-      </div>
-    </main>
+        <p className="mt-6 max-w-2xl leading-7 text-[#f7e9d8]">
+          Manage your profile, security, appearance, and store preferences from
+          one place.
+        </p>
+      </section>
+
+      <SettingsTabs />
+    </div>
   );
 }

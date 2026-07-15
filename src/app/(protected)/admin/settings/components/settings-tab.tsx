@@ -1,145 +1,46 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AccountSettings } from "./account-settings";
-import { SettingsCard } from "./settings-card";
-import { SecuritySettings } from "./security-settings";
 import { AppearanceSettings } from "./appearance-settings";
+import { SecuritySettings } from "./security-settings";
+import { SettingsCard } from "./settings-card";
 import { StoreSettings } from "./store-settings";
 
+const triggerClass = `
+cursor-pointer
+rounded-xl
+px-4
+py-2
+font-medium
+text-[#8b5e34]
+transition-all
+duration-200
+
+hover:bg-[#f8efe4]
+hover:text-[#4a2c1a]
+
+data-[state=active]:bg-[#f4e2cd]
+data-[state=active]:text-[#4a2c1a]
+`;
 export function SettingsTabs() {
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="account" className="space-y-8">
       <TabsList
         variant="line"
-        className="
-          w-full
-          justify-start
-          gap-6
-          border-b
-          border-[#d9b07f]/40
-          bg-transparent
-        "
+        className=" w-full justify-start overflow-x-auto gap-8 border-b border-[#e4c9a7] bg-transparent"
       >
-        <TabsTrigger
-          value="account"
-          className="
-            relative
-            px-1
-            pb-3
-            text-[#8b5e34]
-            transition-all
-            duration-300
-
-            hover:text-[#4a2c1a]
-
-            data-[state=active]:text-[#4a2c1a]
-
-            after:absolute
-            after:bottom-0
-            after:left-0
-            after:h-0.5
-            after:w-full
-            after:origin-left
-            after:scale-x-0
-            after:bg-[#8b5e34]
-            after:transition-transform
-            after:duration-300
-
-            data-[state=active]:after:scale-x-100
-          "
-        >
+        <TabsTrigger value="account" className={triggerClass}>
           Account
         </TabsTrigger>
 
-        <TabsTrigger
-          value="security"
-          className="
-            relative
-            px-1
-            pb-3
-            text-[#8b5e34]
-            transition-all
-            duration-300
-
-            hover:text-[#4a2c1a]
-
-            data-[state=active]:text-[#4a2c1a]
-
-            after:absolute
-            after:bottom-0
-            after:left-0
-            after:h-0.5
-            after:w-full
-            after:origin-left
-            after:scale-x-0
-            after:bg-[#8b5e34]
-            after:transition-transform
-            after:duration-300
-
-            data-[state=active]:after:scale-x-100
-          "
-        >
+        <TabsTrigger value="security" className={triggerClass}>
           Security
         </TabsTrigger>
 
-        <TabsTrigger
-          value="appearance"
-          className="
-            relative
-            px-1
-            pb-3
-            text-[#8b5e34]
-            transition-all
-            duration-300
-
-            hover:text-[#4a2c1a]
-
-            data-[state=active]:text-[#4a2c1a]
-
-            after:absolute
-            after:bottom-0
-            after:left-0
-            after:h-0.5
-            after:w-full
-            after:origin-left
-            after:scale-x-0
-            after:bg-[#8b5e34]
-            after:transition-transform
-            after:duration-300
-
-            data-[state=active]:after:scale-x-100
-          "
-        >
+        <TabsTrigger value="appearance" className={triggerClass}>
           Appearance
         </TabsTrigger>
 
-        <TabsTrigger
-          value="store"
-          className="
-            relative
-            px-1
-            pb-3
-            text-[#8b5e34]
-            transition-all
-            duration-300
-
-            hover:text-[#4a2c1a]
-
-            data-[state=active]:text-[#4a2c1a]
-
-            after:absolute
-            after:bottom-0
-            after:left-0
-            after:h-0.5
-            after:w-full
-            after:origin-left
-            after:scale-x-0
-            after:bg-[#8b5e34]
-            after:transition-transform
-            after:duration-300
-
-            data-[state=active]:after:scale-x-100
-          "
-        >
+        <TabsTrigger value="store" className={triggerClass}>
           Store
         </TabsTrigger>
       </TabsList>
