@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { AuthSession, UserAuth } from "@/lib/auth-types";
+import type { AuthSession } from "@/lib/auth-types";
 import { hasPermission } from "@/lib/permission/has-permission";
 import { isUserRole } from "@/server/shared/user-role.types";
 import { SessionContextValue } from "./session-provider.types";
