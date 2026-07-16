@@ -5,9 +5,9 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
     DATABASE_URL: z.string(),
-    BETTER_AUTH_URL: z.string(),
+    BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
-    CORS_ORIGIN: z.string(),
+    CORS_ORIGIN: z.url(),
     RESEND_API_KEY: z.string(),
     ADMIN_EMAIL: z.string(),
     ADMIN_PASSWORD: z.string(),

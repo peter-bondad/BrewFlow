@@ -10,17 +10,23 @@ import { container } from "@/server/container";
 import { userRole } from "@/server/shared/user-role.types";
 
 export const auth = betterAuth({
-  baseURL: env.BETTER_AUTH_URL,
+  baseURL: {
+    allowedHosts: [
+      "brew-flow-five.vercel.app", // Your strict production domain
+      "localhost:3000", // Allows local development to work seamlessly
+    ],
+    fallback: env.BETTER_AUTH_URL,
+    protocol: process.env.NODE_ENV === "development" ? "http" : "https",
+  },
   secret: env.BETTER_AUTH_SECRET,
   appName: env.NEXT_PUBLIC_APP_NAME,
-  trustedOrigins: ["https://*.vercel.app", env.BETTER_AUTH_URL],
   session: {
-    expiresIn: 60 * 60 * 12, // 12 hours — roughly one shift/business day
-    updateAge: 60 * 60 * 1, // 1 hour — re-extend expiry every hour of activity
-    freshAge: 60 * 15, // 15 minutes — for sensitive actions (see below)
+    expiresIn: 60 * 60 * 12, // 12 hours — session dies after this, no matter what
+    updateAge: 60 * 60 * 1, // 1 hour — if user is active, extend expiry by another 12h every 1h
+    freshAge: 60 * 15, // 15 minutes — sensitive actions (change password, revoke session, delete account) need a session created within the last 15 min, else blocked
     cookieCache: {
       enabled: true,
-      maxAge: 60, // Instant revocation matters more than shaving a DB query (temporary)
+      maxAge: 60, // 1 minute — how long session data is cached in the cookie before re-checking the DB (short = faster logout/revocation reflects almost instantly)
     },
   },
   rateLimit: {
@@ -41,7 +47,17 @@ export const auth = betterAuth({
         window: 300, // 5 minutes
         max: 3,
       },
+      "/reset-password": {
+        window: 300,
+        max: 5,
+      },
     },
+  },
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["x-forwarded-for"],
+    },
+    useSecureCookies: true, // force Secure flag even if NODE_ENV detection ever misfires on Vercel
   },
   database: drizzleAdapter(db, {
     provider: "pg", // Specify the database provider (e.g., "pg" for PostgreSQL)
@@ -71,8 +87,14 @@ export const auth = betterAuth({
       },
     },
   },
+  databaseHooks: {
+    user: {
+      create: {},
+    },
+  },
+  disabledPaths: ["/sign-up/email"],
   emailAndPassword: {
-    requireEmailVerification: false,
+    requireEmailVerification: true,
     enabled: true,
     password: {
       hash: hashPassword,
