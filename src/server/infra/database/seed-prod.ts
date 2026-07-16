@@ -18,7 +18,10 @@ async function seedProductionOwner() {
   });
 
   if (existingUser) {
-    if (existingUser.role !== "owner") {
+    const needsUpdate =
+      existingUser.role !== "owner" || !existingUser.emailVerified;
+
+    if (needsUpdate) {
       await db
         .update(users)
         .set({
@@ -37,11 +40,17 @@ async function seedProductionOwner() {
 
   const result = await auth.api.signUpEmail({
     body: {
-      name: "System Owner",
-      firstName: "System",
-      lastName: "Owner",
       email,
       password,
+
+      // Keep this if Better Auth still requires `name`
+      name: "System Owner",
+
+      firstName: "System",
+      middleName: undefined,
+      lastName: "Owner",
+
+      phoneNumber: undefined,
     },
   });
 

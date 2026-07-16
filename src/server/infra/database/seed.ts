@@ -1,31 +1,35 @@
 import { eq } from "drizzle-orm";
-import db from "./client";
-import { auth } from "@/lib/auth";
-import { users } from "./schemas";
-import { env } from "@/lib/env";
 
-async function seedAdmin() {
+import { auth } from "@/lib/auth";
+import { env } from "@/lib/env";
+import db from "./client";
+import { users } from "./schemas";
+
+async function seedOwner() {
   const email = env.ADMIN_EMAIL;
   const password = env.ADMIN_PASSWORD;
 
   if (!email || !password) {
-    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD are required.");
+    throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be configured.");
   }
 
-  const existingOwner = await db.query.users.findFirst({
+  const existingUser = await db.query.users.findFirst({
     where: eq(users.email, email),
   });
 
-  if (existingOwner) {
-    if (existingOwner.role !== "owner") {
+  if (existingUser) {
+    if (existingUser.role !== "owner" || !existingUser.emailVerified) {
       await db
         .update(users)
-        .set({ role: "owner" })
-        .where(eq(users.id, existingOwner.id));
+        .set({
+          role: "owner",
+          emailVerified: true,
+        })
+        .where(eq(users.id, existingUser.id));
 
-      console.log("Existing user promoted to owner");
+      console.log(`Promoted "${email}" to owner.`);
     } else {
-      console.log("Admin already exists");
+      console.log(`Owner already exists: ${email}`);
     }
 
     return;
@@ -33,11 +37,14 @@ async function seedAdmin() {
 
   const result = await auth.api.signUpEmail({
     body: {
-      name: "System Admin",
-      firstName: "System",
-      lastName: "Admin",
       email,
       password,
+      name: "System Owner",
+      firstName: "System",
+      middleName: undefined,
+      lastName: "Owner",
+
+      phoneNumber: undefined,
     },
   });
 
@@ -45,24 +52,25 @@ async function seedAdmin() {
     throw new Error("Failed to create owner account.");
   }
 
-  const userId = result.user.id;
-
   await db
     .update(users)
     .set({
       role: "owner",
+      emailVerified: true,
     })
-    .where(eq(users.id, userId));
+    .where(eq(users.id, result.user.id));
 
-  console.log(`Owner ready: ${email}`);
+  console.log(`Owner created: ${email}`);
 }
 
-seedAdmin()
-  .then(() => {
-    console.log("Seed completed");
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+async function main() {
+  await seedOwner();
+
+  console.log("Seed completed.");
+}
+
+main().catch((error) => {
+  console.error("Seed failed.");
+  console.error(error);
+  process.exit(1);
+});
