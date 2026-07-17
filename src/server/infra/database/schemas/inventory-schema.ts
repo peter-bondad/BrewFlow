@@ -5,7 +5,6 @@ import {
   integer,
   timestamp,
   boolean,
-  pgEnum,
 } from "drizzle-orm/pg-core";
 import {
   inventoryTransactionTypeEnum,
